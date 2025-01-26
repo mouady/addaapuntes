@@ -1,0 +1,3 @@
+Mostrar grafos: Copiar y pegar mostrado de grafos del Ejemplo3 + Graphviz Online
+Rutas relativas: SIEMPRE, si no funciona por haber puesto una ruta absoluta Daniel no tiene piedad
+Incompatibilidades => Coloreado

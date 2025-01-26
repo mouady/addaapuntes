@@ -1,0 +1,23 @@
+strict graph G {
+  1 [ color="blue" label="Sol" ];
+  2 [ label="Callao" ];
+  3 [ label="Gran Via" ];
+  4 [ label="Principe Pio" ];
+  5 [ color="blue" label="Chueca" ];
+  6 [ color="blue" label="Nuevos Ministerios" ];
+  7 [ label="Opera" ];
+  8 [ label="Bilbao" ];
+  9 [ label="Alonso Martinez" ];
+  1 -- 2 [ ];
+  1 -- 3 [ ];
+  1 -- 5 [ color="blue" ];
+  2 -- 5 [ ];
+  3 -- 4 [ ];
+  4 -- 5 [ ];
+  6 -- 2 [ ];
+  6 -- 1 [ color="blue" ];
+  2 -- 4 [ ];
+  1 -- 7 [ ];
+  5 -- 9 [ ];
+  7 -- 8 [ ];
+}
