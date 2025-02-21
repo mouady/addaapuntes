@@ -15,13 +15,14 @@ public class Ejercicio1PLE {
 	public static List<Producto> productos;
 	
 	public static void ejercicio1_model() throws IOException {
-		DatosAlmacenes.iniDatos("resources/ejercicio1/DatosEntrada1.txt");
+		DatosAlmacenes.iniDatos("resources/ejercicio1/DatosEntrada3.txt");
 
 		almacenes = DatosAlmacenes.getAlmacenes();
-		productos = DatosAlmacenes.getProductos(); // no se reconoce el tipo producto
+		productos = DatosAlmacenes.getProductos();
 		
-		AuxGrammar.generate(DatosAlmacenes.class,"modelos/modeloEj1.lsi","gurobi_models/ej1.lp");
-		GurobiSolution solution = GurobiLp.gurobi("gurobi_models/ej1.lp");
+		// Cambiamos de Ejercicio1PLE a DatosAlmacenes para no tener que poner aqui las cabeceras
+		AuxGrammar.generate(DatosAlmacenes.class,"modelos/modeloEj1.lsi","gurobi_models/gurobiEj1Datos3.lp");
+		GurobiSolution solution = GurobiLp.gurobi("gurobi_models/gurobiEj1Datos3.lp");
 		Locale.setDefault(Locale.of("en", "US"));
 		System.out.println(solution.toString((s,d)->d>0.));
 	}

@@ -94,6 +94,15 @@ public class DatosFestival {
         return DatosFestival.getTipoEntrada(i).cuotaMinima();
     }
     
+    // Añadimos esto para el ___PLE:
+	public static List<Area> getAreas() {
+		return areas;
+	}
+	
+	public static List<TipoEntrada> getTiposEntrada() {
+		return tiposEntrada;
+	}
+    
     public static void toConsole() {
         String2.toConsole(areas, "Áreas");
         String2.toConsole(tiposEntrada, "Tipos de Entrada");

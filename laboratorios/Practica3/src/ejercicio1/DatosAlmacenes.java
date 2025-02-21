@@ -103,7 +103,7 @@ public class DatosAlmacenes {
 		String2.toConsole(almacenes,"almacenes");
 	}
 	
-	// Lo añado para la solucion PLE:
+	// Lo añado para el archivo ___PLE:
 	public static List<Almacen> getAlmacenes() {
 		return almacenes;
 	}

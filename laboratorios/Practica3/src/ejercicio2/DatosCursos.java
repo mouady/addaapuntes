@@ -1,5 +1,6 @@
 package ejercicio2;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -73,6 +74,16 @@ public class DatosCursos {
     public static Integer getPresupuestoTotal() {
         return presupuestoTotal;
     }
+    
+    // Lo añadimos para el __PLE:
+    
+	public static List<Integer> getAreas() {
+		return new ArrayList<Integer>(areas);
+	}
+	
+	public static List<Curso> getCursos() {
+		return new ArrayList<Curso>(cursos);
+	}
 
     public static void toConsole() {
         String2.toConsole(cursos, "Cursos");

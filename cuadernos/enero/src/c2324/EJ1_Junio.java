@@ -92,6 +92,7 @@ public class EJ1_Junio {
 				.filter(t -> !t.hasNext())
 				.findFirst()
 				.get();
+		
 		return res.acum + (res.a * res.b * res.c) + " //";
 	}
 	
