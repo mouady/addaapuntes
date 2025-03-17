@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 public class SolucionEstaciones {
 
     public static SolucionEstaciones create(List<Integer> ls) {
-        return null;
+        return new SolucionEstaciones(ls);
     }
     
     private Integer numEstaciones;
@@ -14,10 +14,26 @@ public class SolucionEstaciones {
     private Double tiempoTotal;
     private Double tiempoMedio;
 
+    // Constructor privado
     private SolucionEstaciones(List<Integer> ls) {
-
+    	 numEstaciones = ls.size();
+    	 camino = ls.stream()
+    	 .map(i -> Ejercicio4AG.grafoTiempo.getVertex(i))
+    	 .collect(Collectors.toList());
+    	 
+    	 tiempoTotal = getTiempoTotal(camino);
+    	 tiempoMedio = tiempoTotal / numEstaciones;	
     }
 
+    private Double getTiempoTotal(List<Estacion> camino) {
+        Double res = 0.;
+        camino.add(camino.get(0));
+        for (int i = 0; i<camino.size()-1; i++) {
+        	res += Ejercicio4AG.grafoTiempo.getEdge(camino.get(i), camino.get(i+1%Ejercicio4AG.n)).tiempo();
+        }
+        return res;
+        }
+    
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder("Resumen del recorrido:\n");
@@ -41,10 +57,11 @@ public class SolucionEstaciones {
     }
 
     public Double getTiempoTotal() {
-        return tiempoTotal;
+    	return tiempoTotal;
     }
 
     public Double getTiempoMedio() {
         return tiempoMedio;
     }
+
 }
