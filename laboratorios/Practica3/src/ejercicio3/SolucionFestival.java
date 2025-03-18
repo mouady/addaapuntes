@@ -1,7 +1,13 @@
 package ejercicio3;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+
+import us.lsi.ag.agchromosomes.AlgoritmoAG;
+import us.lsi.ag.agstopping.StoppingConditionFactory;
+import us.lsi.common.Map2;
+
 import java.util.HashMap;
 
 public class SolucionFestival {
@@ -16,7 +22,12 @@ public class SolucionFestival {
     private Integer unidadesTotales;
 
     private SolucionFestival(List<Integer> ls) {
-    	//TODO
+    	solucion = Map2.empty();
+    	
+    	for (int i = 0; i < ls.size(); i++) {
+    		
+    	}
+    	
     }
 
     @Override
@@ -72,5 +83,32 @@ public class SolucionFestival {
 
     public Integer getUnidadesTotales() {
         return unidadesTotales;
+    }
+    
+    public static void main(String[] args) {
+    	Locale.setDefault(Locale.of("en", "US"));
+		
+		AlgoritmoAG.ELITISM_RATE  = 0.10;
+		AlgoritmoAG.CROSSOVER_RATE = 0.95;
+		AlgoritmoAG.MUTATION_RATE = 0.8;
+		AlgoritmoAG.POPULATION_SIZE = 1000;
+		
+		StoppingConditionFactory.NUM_GENERATIONS = 1000;
+		
+		for (int i = 1; i <= 3; i++) {
+			
+			System.out.println("================================");
+			System.out.println("DATOS DE ENTRADA: " + i);
+			System.out.println("================================");
+			
+			Ejercicio3AG p = new Ejercicio3AG("resources/ejercicio3/DatosEntrada" + i + ".txt");
+			
+			AlgoritmoAG<List<Integer>, SolucionFestival> ap = AlgoritmoAG.of(p);
+			ap.ejecuta();
+			
+			System.out.println("================================");
+			System.out.println(ap.bestSolution());
+			System.out.println("================================\n");
+		}
     }
 }

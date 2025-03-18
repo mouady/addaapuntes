@@ -1,6 +1,5 @@
 package ejercicio4;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.stream.IntStream;
 
@@ -15,6 +14,7 @@ public class Ejercicio4AG implements SeqNormalData<SolucionEstaciones> {
 	
 	private static final double CASTIGO = 10000;
 	
+	public static SimpleWeightedGraph<Estacion,Tramo> grafoCompleto;
 	public static IntegerVertexGraphView<Estacion,Tramo> grafoTiempo;
 	public static IntegerVertexGraphView<Estacion,Tramo> grafoCoste;
 	public static Integer n;
@@ -24,7 +24,7 @@ public class Ejercicio4AG implements SeqNormalData<SolucionEstaciones> {
 		return ChromosomeType.Permutation;
 	}
 	
-	public Ejercicio4AG(String fichero) throws IOException {	
+	public Ejercicio4AG(String fichero) {	
 		
 		SimpleWeightedGraph<Estacion, Tramo> grafoT = GraphsReader.newGraph(fichero,
 				Estacion::ofFormat, 
@@ -38,6 +38,7 @@ public class Ejercicio4AG implements SeqNormalData<SolucionEstaciones> {
 				Tramo::costeBillete);
 		
 		// Correspondencia Estacion - Numero
+		grafoCompleto = grafoT;
 		grafoTiempo = IntegerVertexGraphView.of(grafoT);
 		grafoCoste = IntegerVertexGraphView.of(grafoC);
 		
@@ -56,7 +57,7 @@ public class Ejercicio4AG implements SeqNormalData<SolucionEstaciones> {
 	private double funcionObjetivo(List<Integer> value) {
 		// El %n lo ponemos para que el ultimo nodo se conecte con el primero
 		return IntStream.range(0, n).boxed()
-				.mapToDouble(i -> tiempoTramo_ij(value.get(i), value.get(i + 1%n)))
+				.mapToDouble(i -> tiempoTramo_ij(value.get(i), value.get((i + 1)%n)))
 				.sum();
 	}
 	
@@ -73,7 +74,7 @@ public class Ejercicio4AG implements SeqNormalData<SolucionEstaciones> {
 		double sumaTotal = grafoCoste.edgeSet().stream()
 				.mapToDouble(e -> e.weight()).sum();
 		double costeTrayecto = IntStream.range(0, n).boxed()
-				.mapToDouble(i -> getCosteTramo(value.get(i), value.get(i + 1%n)))
+				.mapToDouble(i -> getCosteTramo(value.get(i), value.get((i + 1)%n)))
 						.sum();
 		
 		if (costeTrayecto > 0.75 * sumaTotal) {
@@ -96,7 +97,7 @@ public class Ejercicio4AG implements SeqNormalData<SolucionEstaciones> {
 		double res = CASTIGO;
 		
 		boolean alMenosDosEstacionesConsec = IntStream.range(0, n).boxed()
-		.map(i -> checkSatisfaccionConsec(value.get(i), value.get(i + 1%n)))
+		.map(i -> checkSatisfaccionConsec(value.get(i), value.get((i + 1)%n)))
 		.filter(bool-> bool)
 		.count() >= 2;
 		

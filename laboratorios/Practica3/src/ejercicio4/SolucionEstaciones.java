@@ -1,7 +1,11 @@
 package ejercicio4;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
+
+import us.lsi.ag.agchromosomes.AlgoritmoAG;
+import us.lsi.ag.agstopping.StoppingConditionFactory;
 
 public class SolucionEstaciones {
 
@@ -28,8 +32,8 @@ public class SolucionEstaciones {
     private Double getTiempoTotal(List<Estacion> camino) {
         Double res = 0.;
         camino.add(camino.get(0));
-        for (int i = 0; i<camino.size()-1; i++) {
-        	res += Ejercicio4AG.grafoTiempo.getEdge(camino.get(i), camino.get(i+1%Ejercicio4AG.n)).tiempo();
+        for (int i = 0; i<camino.size()-1; i+=2) {
+        	res += Ejercicio4AG.grafoCompleto.getEdge(camino.get(i), camino.get(i+1)).tiempo();
         }
         return res;
         }
@@ -64,4 +68,25 @@ public class SolucionEstaciones {
         return tiempoMedio;
     }
 
+    public static void main(String[] args) {
+    	Locale.setDefault(Locale.of("en", "US"));
+
+		AlgoritmoAG.ELITISM_RATE = 0.15;
+		AlgoritmoAG.CROSSOVER_RATE = 0.90;
+		AlgoritmoAG.MUTATION_RATE = 0.9;
+		AlgoritmoAG.POPULATION_SIZE = 2000;
+
+		StoppingConditionFactory.NUM_GENERATIONS = 500;
+		StoppingConditionFactory.MAX_ELAPSEDTIME = 50;
+		StoppingConditionFactory.stoppingConditionType = StoppingConditionFactory.StoppingConditionType.GenerationCount;
+
+		
+		Ejercicio4AG p = new Ejercicio4AG("resources/ejercicio4/DatosEntrada2.txt");
+		AlgoritmoAG<List<Integer>, SolucionEstaciones> ap = AlgoritmoAG.of(p);
+		ap.ejecuta();
+
+		System.out.println("================================");
+		System.out.println(ap.bestSolution());
+		System.out.println("================================");
+	}
 }
